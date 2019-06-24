@@ -24,7 +24,7 @@ optional arguments:
 
 ## Todo
 
-* gestion des inputs de la ligne de commande
+* ~~ gestion des inputs de la ligne de commande ~~
 * utilisation d'un fichier de configuration
 * listing des fichiers csv d'un répertoire
 * extraction des cellules demandées
