@@ -26,7 +26,7 @@ optional arguments:
 
 * ~~ gestion des inputs de la ligne de commande ~~
 * utilisation d'un fichier de configuration
-* listing des fichiers csv d'un répertoire
+* ~~ listing des fichiers csv d'un répertoire ~~
 * extraction des cellules demandées
 * applicaiton d'un algorithme sur les cellules demandées pour transformation
 * écriture d'un fichier de sortie  excel

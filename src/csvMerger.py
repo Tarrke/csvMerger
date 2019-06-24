@@ -3,6 +3,9 @@
 #coding: utf-8
 
 import argparse
+import csv
+from os import listdir
+from os.path import isfile, join
 
 parser = argparse.ArgumentParser(description="A simple python script that fetch data into csvs and write an excel output file")
 
@@ -15,3 +18,11 @@ args = parser.parse_args()
 
 print(args.output)
 
+directory = "./"
+if args.dir:
+    dir = args.dir
+
+# Get the file list
+f = [ join(dir, f) for f in listdir(dir) if isfile(join(dir, f)) ]
+
+print(f)
