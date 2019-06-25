@@ -1,5 +1,7 @@
 # Ignore local output file
 tt.xlsx
+# Ignore LibreOffice temp files
+.~lock*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
