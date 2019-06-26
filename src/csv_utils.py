@@ -45,11 +45,15 @@ def excel2num(col):
     return result
 
 # ToDo : gerer les cas A2:B5
-def cellsExplodeTabs( cells ):
+def cellsExplodeTabs( cells, fncts ):
     new_cells = []
-    for cell in cells:
+    new_fncts = []
+    for i in range(len(cells)):
+        cell = cells[i]
+        fnct = fncts[i]
         if ':' not in cell:
             new_cells.append(cell)
+            new_fncts.append(fnct)
         else:
             # Should explode the table
             deb, fin = re.split(':', cell)
@@ -61,11 +65,13 @@ def cellsExplodeTabs( cells ):
             for line in range(line_deb, line_fin+1):
                 for col in range( excel2num(col_deb), excel2num(col_fin)+1 ):
                     new_cells.append(excel_style(line, col))
-    return new_cells
+                    new_fncts.append(fnct)
+    return (new_cells, new_fncts)
 
 if __name__ == '__main__':
     cells = ["B13:D15"]
-    print(cellsExplodeTabs(cells))
+    fncts = [None]
+    print(cellsExplodeTabs(cells, fncts))
     exit(0)
     cell = "A4"
     print(col2tab(cell))

@@ -6,6 +6,7 @@ import argparse
 import csv
 from os import listdir
 from os.path import isfile, join
+import re
 
 import csv_utils
 
@@ -27,16 +28,32 @@ if args.dir:
     dir = args.dir
 
 # Get the file list
-f = [join(dir, f) for f in listdir(dir) if isfile(join(dir, f))]
+f = sorted( [join(dir, f) for f in listdir(dir) if (isfile(join(dir, f)) and not re.match(r'\.~.*', f) )] )
+
+# Testing function
+def decorate(string):
+    return '#' + string + '#'
+
+# Metier function, should be in the configuration file
+def handleTitleCell(string):
+    #BESSE-ET-ST-ANA (63)      Indicatif : 63038001, alt : 1050m, lat : 45°30'24"N, lon : 02°56'18"E#
+    string = [ s for s in re.split(' |,', string) if s != '']
+    print('~',string)
+    lat = re.split('°|\'|"', string[10])
+    lon = re.split('°|\'|"', string[13])
+    result = string[4] + ';' + string[7] + ';' + str(int(lat[0])+60*int(lat[1])+3600*int(lat[2]))+lat[3] + ';' + str(int(lon[0])+60*int(lon[1])+3600*int(lon[2]))+lon[3]
+    return result
+
 
 cells = ["D1", "M2:M14", "AH2:AH14"]
-cells = ["D1", "M2:M14"]
+cells = ["A4", "B22:N22", "B52:N52", "B63:N63"]
+fncts = [handleTitleCell, float, float, float]
 
-cells = csv_utils.cellsExplodeTabs(cells)
+
+(cells, fncts) = csv_utils.cellsExplodeTabs(cells, fncts)
 cells = [csv_utils.col2tab(c) for c in cells]
 print(cells)
-
-exit(0)
+print(fncts)
 
 out = open(args.output, 'w')
 
@@ -47,14 +64,27 @@ for file in f:
     cpt = 1  # Row are numbered from 1
     for row in dataReader:
         if csv_utils.isRowInCells(cpt, cells):
-            print("row", csv_utils.num2col(cpt), "is in cells")
-            sub_cells = [ a for a in cells if a[0] == cpt ]
+            print("row", cpt, "is in cells")
+            sub_cells = []
+            sub_fncts = []
+            for i in range(len(cells)):
+                if cells[i][0] == cpt:
+                    sub_cells.append(cells[i])
+                    sub_fncts.append(fncts[i])
             print(sub_cells)
+            print(sub_fncts)
             print(row)
-            for cell in sub_cells:
-                out.write(row[cell[1]-1])
+            for i in range(len(sub_cells)):
+                cell = sub_cells[i]
+                print('~', cell)
+                s = row[cell[1]-1]
+                print('~', s)
+                if sub_fncts[i]:
+                    s = sub_fncts[i](s)
+                    print('~', s)
+                out.write(str(s))
+                out.write(';')
         cpt += 1
-
-    break
+    out.write('\n')
 
 out.close()
