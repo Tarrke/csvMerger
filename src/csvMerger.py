@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#coding: utf-8
+# coding: utf-8
 
 import argparse
 import csv
@@ -11,11 +11,14 @@ import re
 import csv_utils
 
 parser = argparse.ArgumentParser(
-    description="A simple python script that fetch data into csvs and write an excel output file")
+    description="A simple python script that fetch data into csvs and write \
+    an excel output file")
 
 parser.add_argument('-d', '--dir', help="directory where to fetch data")
 parser.add_argument(
-    '-v', '--verbose', help="increase output verbosity", action='count', default=0)
+    '-v', '--verbose',
+    help="increase output verbosity",
+    action='count', default=0)
 parser.add_argument('-f', '--config', help="configuration file for the parser")
 parser.add_argument('output', help="output file name")
 
@@ -28,20 +31,30 @@ if args.dir:
     dir = args.dir
 
 # Get the file list
-f = sorted( [join(dir, f) for f in listdir(dir) if (isfile(join(dir, f)) and not re.match(r'\.~.*', f) )] )
+f = sorted([join(dir, f) for f in listdir(dir) if (
+    isfile(join(dir, f)) and not re.match(r'\.~.*', f))])
 
 # Testing function
+
+
 def decorate(string):
     return '#' + string + '#'
 
 # Metier function, should be in the configuration file
+
+
 def handleTitleCell(string):
-    #BESSE-ET-ST-ANA (63)      Indicatif : 63038001, alt : 1050m, lat : 45°30'24"N, lon : 02°56'18"E#
-    string = [ s for s in re.split(' |,', string) if s != '']
-    print('~',string)
+    string = [s for s in re.split(' |,', string) if s != '']
+    print('~', string)
     lat = re.split('°|\'|"', string[10])
     lon = re.split('°|\'|"', string[13])
-    result = string[4] + ';' + string[7] + ';' + str( (1 if lat[3] == 'N' else -1 ) * (int(lat[0])+int(lat[1])/60+int(lat[2])/3600)) + ';' + str( (1 if lon[3] == 'E' else -1 ) * (int(lon[0])+int(lon[1])/60+int(lon[2])/3600))
+
+    str_lat = str((1 if lat[3] == 'N' else -1) *
+                  (int(lat[0])+int(lat[1])/60+int(lat[2])/3600))
+    str_lon = str((1 if lon[3] == 'E' else -1) *
+                  (int(lon[0])+int(lon[1])/60+int(lon[2])/3600))
+
+    result = string[4] + ';' + string[7] + ';' + str_lat + ';' + str_lon
     return result
 
 
