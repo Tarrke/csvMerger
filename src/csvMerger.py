@@ -41,7 +41,7 @@ def handleTitleCell(string):
     print('~',string)
     lat = re.split('°|\'|"', string[10])
     lon = re.split('°|\'|"', string[13])
-    result = string[4] + ';' + string[7] + ';' + str(int(lat[0])+60*int(lat[1])+3600*int(lat[2]))+lat[3] + ';' + str(int(lon[0])+60*int(lon[1])+3600*int(lon[2]))+lon[3]
+    result = string[4] + ';' + string[7] + ';' + str( (1 if lat[3] == 'N' else -1 ) * (int(lat[0])+int(lat[1])/60+int(lat[2])/3600)) + ';' + str( (1 if lon[3] == 'E' else -1 ) * (int(lon[0])+int(lon[1])/60+int(lon[2])/3600))
     return result
 
 
