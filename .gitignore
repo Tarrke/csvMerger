@@ -3,6 +3,9 @@ tt.xlsx
 # Ignore LibreOffice temp files
 .~lock*
 
+# Ignore local vscode settings
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
