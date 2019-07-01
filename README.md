@@ -28,12 +28,12 @@ optional arguments:
 
 ## Todo
 
-* ~~ gestion des inputs de la ligne de commande ~~
+* ~~gestion des inputs de la ligne de commande~~
 * utilisation d'un fichier de configuration
-* ~~ listing des fichiers csv d'un répertoire ~~
-* ~~ extraction des cellules demandées ~~
+* ~~listing des fichiers csv d'un répertoire~~
+* ~~extraction des cellules demandées~~
 * application d'un algorithme sur les cellules demandées pour transformation
-  * ~~ test avec une fonction définie dans le programme principal ~~
+  * ~~test avec une fonction définie dans le programme principal~~
   * application d'une fonction définie dans un fichier de config
-* ~~ écriture d'un fichier de sortie csv ~~
-* ~~ écriture d'un fichier de sortie excel ~~
+* ~~écriture d'un fichier de sortie csv~~
+* ~~écriture d'un fichier de sortie excel~~
