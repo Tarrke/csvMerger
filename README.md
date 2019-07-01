@@ -2,10 +2,14 @@
 
 un script qui extrait des cellules d'un csv pour en faire une ligne dans un excel résultat, pour tous les csv d'un répertoire.
 
+## Version Actuelle
+
+v0.2
+
 ## Utilisation
 
 ~~~bash
-$ ./csvMerger.py -h
+$ ./src/csvMerger.py -h
 usage: csvMerger.py [-h] [-d DIR] [-v] [-f CONFIG] output
 
 A simple python script that fetch data into csvs and write an excel output
@@ -32,4 +36,4 @@ optional arguments:
   * ~~ test avec une fonction définie dans le programme principal ~~
   * application d'une fonction définie dans un fichier de config
 * ~~ écriture d'un fichier de sortie csv ~~
-* écriture d'un fichier de sortie excel
+* ~~ écriture d'un fichier de sortie excel ~~

@@ -40,15 +40,7 @@ if args.dir:
 f = sorted([join(dir, f) for f in listdir(dir) if (
     isfile(join(dir, f)) and not re.match(r'\.~.*', f))])
 
-# Testing function
-
-
-def decorate(string):
-    return '#' + string + '#'
-
 # Metier function, should be in the configuration file
-
-
 def handleTitleCell(string):
     string = [s for s in re.split(' |,', string) if s != '']
     # print('~', string)
@@ -125,49 +117,35 @@ worksheet.write('AO1', 'Deg Jour Unif Novembre')
 worksheet.write('AP1', 'Deg Jour Unif Decembre')
 worksheet.write('AQ1', 'Deg Jour Unif Annee')
 
-# out = open(args.output, 'w')
-
 row_num = 2  # Lines starts at line 2, line 1 is the headers
 for file in f:
-    print(file)
+    print("Traitement du fichier", file)
     dataReader = csv.reader(open(file, newline=''),
                             delimiter=';', quotechar='"')
     cpt = 1  # Row are numbered from 1
-    csv_line = ""
+    csv_line = []
     for row in dataReader:
         if csv_utils.isRowInCells(cpt, cells):
-            # print("row", cpt, "is in cells")
             sub_cells = []
             sub_fncts = []
             for i in range(len(cells)):
                 if cells[i][0] == cpt:
                     sub_cells.append(cells[i])
                     sub_fncts.append(fncts[i])
-            # print(sub_cells)
-            # print(sub_fncts)
-            # print(row)
             for i in range(len(sub_cells)):
                 cell = sub_cells[i]
-                # print('~', cell)
                 s = row[cell[1]-1]
-                # print('~', s)
                 if sub_fncts[i]:
                     s = sub_fncts[i](s)
-                    # print('~', s)
-                print('~', s)
-                csv_line += str(s) + ';'
-                # out.write(str(s))
-                # out.write(';')
+                if type(s) == type([]):
+                    csv_line +=  s
+                else:
+                    csv_line.append(s)
         cpt += 1
-    print('~', csv_line.split(';'))
     col_num = 1
-    for value in csv_line.split(';'):
-        print('cell', csv_utils.excel_style(row_num, col_num), ':', value)
-        print(type(value))
+    for value in csv_line:
         worksheet.write(csv_utils.excel_style(row_num, col_num), value)
         col_num += 1
-    # out.write('\n')
     row_num += 1
-    break
 
 workbook.close()
