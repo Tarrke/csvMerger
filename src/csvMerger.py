@@ -43,9 +43,12 @@ f = sorted([join(dir, f) for f in listdir(dir) if (
 # Metier function, should be in the configuration file
 def handleTitleCell(string):
     string = [s for s in re.split(' |,', string) if s != '']
-    # print('~', string)
+    print('~', string)
     lat = re.split('°|\'|"', string[10])
     lon = re.split('°|\'|"', string[13])
+    lat[0] = lat[0].replace('Â', '')
+    lon[0] = lon[0].replace('Â', '')
+    print(lat, lon)
 
     str_lat = str((1 if lat[3] == 'N' else -1) *
                   (int(lat[0])+int(lat[1])/60+int(lat[2])/3600))
